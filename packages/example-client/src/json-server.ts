@@ -32,7 +32,7 @@ export class JsonServer {
         schemaRequestService: this.resolveSchema.bind(this)
     });
 
-    protected readonly pendingValidationRequests = new Map<string, number>();
+    protected readonly pendingValidationRequests = new Map<string, NodeJS.Timeout>();
 
     constructor(
         protected readonly connection: _Connection
@@ -198,7 +198,7 @@ export class JsonServer {
         const uri = URI.parse(url);
         if (uri.scheme === 'file') {
             return new Promise<string>((resolve, reject) => {
-                fs.readFile(uri.fsPath, 'UTF-8', (err, result) => {
+                fs.readFile(uri.fsPath, { encoding: 'utf8' }, (err, result) => {
                     err ? reject('') : resolve(result.toString());
                 });
             });
@@ -207,8 +207,9 @@ export class JsonServer {
             const response = await xhr({ url, followRedirects: 5 });
             return response.responseText;
         }
-        catch (error) {
-            return Promise.reject(error.responseText || getErrorStatusDescription(error.status) || error.toString());
+        catch (error: unknown) {
+            const err = error as Record<string, unknown>;
+            return Promise.reject(err.responseText || getErrorStatusDescription(err.status as number) || err.toString());
         }
     }
 

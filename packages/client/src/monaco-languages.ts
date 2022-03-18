@@ -3,7 +3,7 @@
  * Licensed under the MIT License. See License.txt in the project root for license information.
  * ------------------------------------------------------------------------------------------ */
 import type * as monaco from 'monaco-editor-core';
-import globToRegExp = require('glob-to-regexp');
+import globToRegExp from 'glob-to-regexp';
 import {
     Languages, DiagnosticCollection, CompletionItemProvider, DocumentIdentifier, HoverProvider,
     SignatureHelpProvider, DefinitionProvider, ReferenceProvider, DocumentHighlightProvider,

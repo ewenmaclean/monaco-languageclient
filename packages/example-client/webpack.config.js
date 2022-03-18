@@ -7,7 +7,7 @@ const lib = path.resolve(__dirname, "lib");
 
 const webpack = require('webpack');
 const merge = require('webpack-merge');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const terser = require('terser-webpack-plugin');
 
 const common = {
     entry: {
@@ -46,7 +46,7 @@ const common = {
 if (process.env['NODE_ENV'] === 'production') {
     module.exports = merge(common, {
         plugins: [
-            new UglifyJSPlugin(),
+            new terser(),
             new webpack.DefinePlugin({
                 'process.env.NODE_ENV': JSON.stringify('production')
             })

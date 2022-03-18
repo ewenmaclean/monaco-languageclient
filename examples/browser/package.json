@@ -6,18 +6,24 @@
     "file-loader": "^4.3.0",
     "monaco-languageclient": "^0.18.0",
     "vscode-json-languageservice": "^4.1.9",
-    "vscode-languageserver-types": "^3.16.0"
+    "vscode-languageserver-types": "^3.16.0",
+    "css-loader": "^0.28.11",
+    "source-map-loader": "^0.2.3",
+    "style-loader": "^0.20.3",
+    "uglifyjs-webpack-plugin": "^1.2.4",
+    "webpack": "^3.11.0",
+    "webpack-merge": "^4.1.2"
   },
   "scripts": {
-    "prepare": "yarn run clean && yarn run build",
+    "prepare": "npm run clean && npm run build",
     "compile": "tsc",
     "watch": "tsc -w",
-    "clean": "rimraf lib",
+    "clean": "npx shx rm -fr lib",
     "copy": "shx cp src/index.html lib/index.html",
-    "build": "yarn run compile && webpack && yarn run copy",
-    "update:file-deps": "yarn run clean:file-deps && yarn install",
-    "clean:file-deps": "yarn run clean:monaco-languageclient",
-    "update:monaco-languageclient": "yarn run clean:monaco-languageclient && yarn install",
-    "clean:monaco-languageclient": "rimraf node_modules/monaco-languageclient"
+    "build": "npm run compile && webpack && npm run copy",
+    "update:file-deps": "npm run clean:file-deps && npm install",
+    "clean:file-deps": "npm run clean:monaco-languageclient",
+    "update:monaco-languageclient": "npm run clean:monaco-languageclient && npm install",
+    "clean:monaco-languageclient": "npx shx -fr node_modules/monaco-languageclient"
   }
 }

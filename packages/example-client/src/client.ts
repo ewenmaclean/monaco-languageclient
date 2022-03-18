@@ -8,7 +8,7 @@ import {
     MonacoLanguageClient, MessageConnection, CloseAction, ErrorAction,
     MonacoServices, createConnection
 } from 'monaco-languageclient';
-import normalizeUrl = require('normalize-url');
+import normalizeUrl from 'normalize-url';
 const ReconnectingWebSocket = require('reconnecting-websocket');
 
 // register Monaco languages
