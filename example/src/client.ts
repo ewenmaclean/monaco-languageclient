@@ -9,23 +9,20 @@ import {
     MonacoServices, createConnection
 } from 'monaco-languageclient';
 import normalizeUrl = require('normalize-url');
+
 const ReconnectingWebSocket = require('reconnecting-websocket');
 
 // register Monaco languages
 monaco.languages.register({
-    id: 'json',
-    extensions: ['.json', '.bowerrc', '.jshintrc', '.jscsrc', '.eslintrc', '.babelrc'],
-    aliases: ['JSON', 'json'],
-    mimetypes: ['application/json'],
+    id: 'mydsl',
+    extensions: ['.mydsl'],
+    aliases: ['mydsl'],
+    mimetypes: ['application/mydsl'],
 });
 
 // create Monaco editor
-const value = `{
-    "$schema": "http://json.schemastore.org/coffeelint",
-    "line_endings": "unix"
-}`;
 monaco.editor.create(document.getElementById("container")!, {
-    model: monaco.editor.createModel(value, 'json', monaco.Uri.parse('inmemory://model.json')),
+    model: monaco.editor.createModel('', 'mydsl', monaco.Uri.parse('inmemory:///model.mydsl')),
     glyphMargin: true,
     lightbulb: {
         enabled: true
@@ -36,7 +33,7 @@ monaco.editor.create(document.getElementById("container")!, {
 MonacoServices.install(monaco);
 
 // create the web socket
-const url = createUrl('/sampleServer')
+const url = createUrl('/mydsl')
 const webSocket = createWebSocket(url);
 // listen when the web socket is opened
 listen({
@@ -51,10 +48,10 @@ listen({
 
 function createLanguageClient(connection: MessageConnection): MonacoLanguageClient {
     return new MonacoLanguageClient({
-        name: "Sample Language Client",
+        name: "MYDSL Language Client",
         clientOptions: {
             // use a language id as a document selector
-            documentSelector: ['json'],
+            documentSelector: ['mydsl'],
             // disable the default error handler
             errorHandler: {
                 error: () => ErrorAction.Continue,
